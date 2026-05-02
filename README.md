@@ -1,9 +1,18 @@
 # 🎓 AI Destekli Kopya Tespitli Online Sınav Sistemi
 
 ## 🎯 Projenin Amacı ve Hedefleri
-Dünya genelinde her yıl 8 milyondan fazla öğrenci online sınavlara girmektedir. COVID-19 sonrası süreçte online sınavlarda kopya girişimleri %70+ oranda artmıştır. Ancak mevcut sistemlerde gerçek zamanlı bir yapay zeka analizi bulunmamakta, yalnızca basit kural tabanlı denetimler yapılmaktadır. 
 
-**Amacımız:** Mikroservis mimarisiyle çalışan, 4 akıllı AI modülü (Yüz Tespiti, Göz Takibi, Ses Analizi, Davranış Sınıflandırma) ile gerçek zamanlı gözetim (Real-Time Proctoring) yapan bir platform geliştirmektir. Sistem, öğrenci davranışlarını analiz ederek anlık olarak 0-100 arası bir "Risk Skoru" üretir ve eğitmeni uyarır.
+Dünya genelinde her yıl 8 milyondan fazla öğrenci online sınavlara girmektedir. COVID-19 sonrası süreçte online sınavlarda kopya girişimleri %70'in üzerinde artış göstermiştir. Ancak mevcut sistemlerin çoğunda gerçek zamanlı bir yapay zeka analizi bulunmamakta, yalnızca basit kural tabanlı denetimler yapılmaktadır. 
+
+**Temel Amacımız:** Mikroservis mimarisiyle çalışan; Yüz Tespiti, Göz Takibi, Ses Analizi ve Davranış Sınıflandırma olmak üzere 4 akıllı AI modülü ile gerçek zamanlı gözetim (Real-Time Proctoring) yapan yenilikçi bir platform geliştirmektir. Sistem, öğrenci davranışlarını saniyeler içinde analiz ederek anlık olarak 0-100 arası dinamik bir "Risk Skoru" üretir ve eğitmeni otomatik olarak uyarır.
+
+### 🔌 Portable (Gömülebilir) B2B SaaS Mimarisi
+
+Geliştirdiğimiz bu platform sadece bağımsız bir web uygulaması olarak değil, diğer şirketlerin ve kurumların kendi altyapılarına kolayca entegre edebileceği "Taşınabilir (Portable)" bir B2B SaaS ürünü olarak tasarlanmıştır:
+
+* **API & Webhook Entegrasyonu:** Kurumlar, kendi LMS (Öğrenim Yönetim Sistemi) veya İK platformlarından REST API'lerimiz aracılığıyla sınav oturumu başlatabilir. Sınav bitiminde AI analiz sonuçları ve detaylı risk raporları Webhook'lar üzerinden kurumun kendi sistemine otomatik olarak iletilir.
+* **Embeddable Widget / Iframe:** Kurumsal müşteriler, kendi web sitelerinin arayüzünü bozmadan sınav gözetim modülümüzü basit bir `<script>` etiketi veya `iframe` yardımıyla sayfalarına gömebilirler.
+* **On-Premise (Yerel) Kurulum Desteği:** Veri gizliliği nedeniyle dış bulut servislerini kullanmak istemeyen şirketler için sistemimiz, Docker container yapısı sayesinde kurum içi (local) sunucularda tamamen izole ve güvenli bir şekilde ayağa kaldırılabilir.
 
 ## 👥 Takım Üyeleri ve Görevleri
 Projemiz 8 kişilik yetkin bir mühendislik ekibi tarafından yürütülmektedir.
