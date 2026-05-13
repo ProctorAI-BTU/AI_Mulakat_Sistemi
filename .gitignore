@@ -1,0 +1,4 @@
+
+# Local Python dependency cache
+.deps/
+.pytest_cache/
