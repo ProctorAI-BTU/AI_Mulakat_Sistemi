@@ -28,7 +28,16 @@ export default function Login({ onNavigate }) {
           <div className="form-group">
             <label>Şifre</label>
             <input type="password" className="form-input" placeholder="••••••••" />
-          </div>
+          </div>  
+          {!isLoginView && (
+            <div className="form-group">
+              <label>Rol</label>
+              <select className="form-input">
+                <option>Öğrenci</option>
+                <option>Eğitmen</option>
+              </select>
+            </div>
+         )}
           
           <div className="auth-actions">
             <button 
