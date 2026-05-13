@@ -50,8 +50,9 @@ export default function ExamRoom({ onNavigate }) {
                <h3 className="modal-title">UYARI</h3>
             </div>
             <div className="modal-body">
-              <p className="modal-line">Tam ekran modundan çıkıldı.</p>
-              <p className="modal-violation">İhlal sayısı: 2 / 3</p>
+               <p className="modal-line">Tam ekran modundan çıkıldı.</p>
+               <p className="modal-line">Lütfen yeniden tam ekran moduna dönünüz.</p>
+               <p className="modal-violation">İhlal sayısı: 2 / 3</p>
             </div>
             <button className="btn-primary" style={{width: '100%', padding: '0.65rem'}} onClick={() => setShowWarning(false)}>
               Tam Ekrana Dön
