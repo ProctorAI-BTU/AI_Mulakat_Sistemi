@@ -1,0 +1,137 @@
+
+
+.admin-table-wrapper {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-table thead {
+  background: #f8f9fb;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 14px 20px;
+  color: #6b7280;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.admin-row {
+  transition: background-color 0.15s ease;
+}
+
+.admin-row:hover {
+  background-color: #f8f9fb;
+}
+
+.admin-row--high {
+  background: #fff5f5;
+}
+
+.admin-row--high:hover {
+  background: #fee2e2;
+}
+
+.td-student {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.risk-badge--normal {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.risk-badge--high {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.risk-badge--critical {
+  background: #fecdd3;
+  color: #be123c;
+}
+
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn--watch {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.action-btn--watch:hover {
+  background: #dbeafe;
+}
+
+.action-btn--report {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.action-btn--report:hover {
+  background: #dcfce7;
+}
+
+.action-btn--warn {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.action-btn--warn:hover {
+  background: #fde68a;
+}
+
+
+@media (max-width: 768px) {
+  .admin-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .admin-table {
+    min-width: 600px;
+  }
+}

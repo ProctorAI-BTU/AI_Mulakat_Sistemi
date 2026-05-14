@@ -1,0 +1,91 @@
+services:
+  # MongoDB — Lokal geliştirme veritabanı
+
+  mongodb:
+    image: mongo:7
+    container_name: ai_sinav_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: ai_sinav_db
+    restart: unless-stopped
+
+ 
+  # Auth Service — JWT Kimlik Doğrulama (:3001)
+ 
+  auth-service:
+    build: ./services/auth-service
+    container_name: ai_sinav_auth
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      MONGO_URI: mongodb://mongodb:27017/ai_sinav_db
+      JWT_SECRET: ai-mulakat-test-secret-key-2026-gizli-anahtar
+      JWT_EXPIRES_IN: 7d
+      JWT_REFRESH_SECRET: ai-mulakat-refresh-secret-key-2026-yenile
+      JWT_REFRESH_EXPIRES_IN: 30d
+      NODE_ENV: development
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+ 
+  # AI — Face Detection (:8091)
+ 
+  face-detection:
+    build: ./ai-services/face-detection-service
+    container_name: ai_sinav_face
+    ports:
+      - "8091:8091"
+    restart: unless-stopped
+
+ 
+  # AI — Eye Tracking (:8092)
+
+  eye-tracking:
+    build: ./ai-services/eye-tracking-service
+    container_name: ai_sinav_eye
+    ports:
+      - "8092:8092"
+    restart: unless-stopped
+
+ 
+  # AI — Audio Analysis (:8093)
+  audio-analysis:
+    build: ./ai-services/audio-analysis-service
+    container_name: ai_sinav_audio
+    ports:
+      - "8093:8093"
+    restart: unless-stopped
+
+
+  # AI — Risk Scoring (:8094)
+ 
+  risk-scoring:
+    build: ./ai-services/risk-scoring-service
+    container_name: ai_sinav_risk
+    ports:
+      - "8094:8094"
+    restart: unless-stopped
+
+ 
+  # Exam Service — Sınav ve Sorular (:3002)
+
+  exam-service:
+    build: ./services/exam-service
+    container_name: ai_sinav_exam
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: 3002
+      MONGO_URI: mongodb://mongodb:27017/ai_sinav_db
+      NODE_ENV: development
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
