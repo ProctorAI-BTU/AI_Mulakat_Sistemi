@@ -15,24 +15,24 @@ export default function Login({ onNavigate }) {
         <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
           {!isLoginView && (
             <div className="form-group">
-              <label>Ad Soyad</label>
-              <input type="text" className="form-input" placeholder="Ad Soyad" />
+              <label htmlFor="fullName">Ad Soyad</label>
+              <input id="fullName" type="text" className="form-input" placeholder="Ad Soyad" />
             </div>
           )}
 
           <div className="form-group">
-            <label>E-posta</label>
-            <input type="email" className="form-input" placeholder="ornek@email.com" />
+            <label htmlFor="email">E-posta</label>
+            <input id="email" type="email" className="form-input" placeholder="ornek@email.com" />
           </div>
           
           <div className="form-group">
-            <label>Şifre</label>
-            <input type="password" className="form-input" placeholder="••••••••" />
+            <label htmlFor="password">Şifre</label>
+            <input id="password" type="password" className="form-input" placeholder="••••••••" />
           </div>  
           {!isLoginView && (
             <div className="form-group">
-              <label>Rol</label>
-              <select className="form-input">
+              <label htmlFor="role">Rol</label>
+              <select id="role" className="form-input">
                 <option>Öğrenci</option>
                 <option>Eğitmen</option>
               </select>

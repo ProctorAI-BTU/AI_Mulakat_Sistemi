@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/report.css";
 
-export default function ReportPage({ onNavigate }) {
+export default function ReportDetail({ onNavigate }) {
   return (
     <div className="report-layout">
       {/* Üst Bar */}
