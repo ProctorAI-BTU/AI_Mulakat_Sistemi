@@ -251,10 +251,16 @@ export default function ExamRoom({ onNavigate }) {
                         Sonraki
                       </button>
                     ) : (
-                      <SubmitButton onNavigate={async () => {
-                         await examService.finishSession(sessionId);
-                         onNavigate("instructor-dashboard");
-                      }} />
+                     <SubmitButton onNavigate={async () => {
+                         try {
+                           await examService.finishSession(sessionId);
+                        } catch (err) {
+                           console.warn("Sınav bitirme API hatası:", err);
+                        }
+
+                       onNavigate("instructor-dashboard");
+                     }} />
+                
                     )}
                   </div>
                 </div>
