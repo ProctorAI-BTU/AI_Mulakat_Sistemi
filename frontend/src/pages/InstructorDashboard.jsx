@@ -1,6 +1,7 @@
 import React from "react";
 import AlertFeed from "../components/Dashboard/AlertFeed";
 import StudentGrid from "../components/Dashboard/StudentGrid";
+import RiskCharts from "../components/Dashboard/RiskCharts";
 import "../styles/dashboard.css";
 import "../styles/admin.css";
 
@@ -22,6 +23,7 @@ export default function InstructorDashboard({ onNavigate, onLogout }) {
 
       <main className="dashboard-main">
         <AlertFeed />
+        <RiskCharts />
         <StudentGrid onNavigate={onNavigate} />
       </main>
     </div>
