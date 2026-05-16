@@ -9,6 +9,10 @@ const examService = {
       },
     });
 
+    if (!response.ok) {
+      throw new Error("Sınav oturumu başlatılamadı.");
+    }
+
     return response.json();
   },
 
@@ -48,6 +52,10 @@ const examService = {
         "Content-Type": "application/json",
       },
     });
+
+    if (!response.ok) {
+      throw new Error("Sınav oturumu bitirilemedi.");
+    }
 
     return response.json();
   },
