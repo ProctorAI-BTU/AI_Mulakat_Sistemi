@@ -48,13 +48,14 @@ export default function ExamRoom({ onNavigate }) {
         console.warn("Sınav başlatma API hatası (iskelet olduğu için görmezden geliniyor):", err);
       }
       
-      let fetchedQuestions = [];
-      try {
-        const questionsRes = await fetch('/api/exams/exam-1/questions').then(r => r.json());
-        if (questionsRes.success && questionsRes.questions) {
-           fetchedQuestions = questionsRes.questions;
-        }
-      } catch (err) {
+  let fetchedQuestions = [];
+  try {
+      const questionsRes = await examService.getQuestions("exam-1");
+
+     if (questionsRes.questions) {
+    fetchedQuestions = questionsRes.questions;
+     }
+  } catch (err) {
         console.warn("Soruları çekme hatası (iskelet olduğu için görmezden geliniyor):", err);
       }
 
@@ -215,13 +216,24 @@ export default function ExamRoom({ onNavigate }) {
             {questions.length > 0 ? (
               <>
                 <div className="question-counter">Soru {currentQuestionIndex + 1} / {questions.length}</div>
-                <QuestionCard 
-                  question={questions[currentQuestionIndex]}
-                  selectedOption={answers[questions[currentQuestionIndex]._id]}
-                  onOptionSelect={(optIndex) => {
-                    setAnswers(prev => ({...prev, [questions[currentQuestionIndex]._id]: optIndex}));
-                  }}
-                />
+               <QuestionCard 
+                 question={questions[currentQuestionIndex]}
+                 selectedOption={answers[questions[currentQuestionIndex]._id]}
+                 onOptionSelect={async (optIndex) => {
+                  const questionId = questions[currentQuestionIndex]._id;
+
+                 setAnswers(prev => ({
+                   ...prev,
+                  [questionId]: optIndex
+                 }));
+
+                try {
+                  await examService.submitAnswer(sessionId, questionId, optIndex);
+               } catch (err) {
+                 console.error("Cevap gönderilemedi:", err);
+              }
+            }}
+           />
                 <div className="exam-nav">
                   <button 
                     className="btn-exam btn-exam--prev" 
