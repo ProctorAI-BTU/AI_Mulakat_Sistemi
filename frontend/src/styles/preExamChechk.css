@@ -1,0 +1,108 @@
+.pre-check-page {
+  min-height: 100vh;
+  background: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.pre-check-card {
+  width: 100%;
+  max-width: 760px;
+  background: white;
+  border-radius: 18px;
+  padding: 48px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.pre-check-card h1 {
+  margin: 0 0 32px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.pre-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pre-check-item {
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 14px;
+  min-height: 76px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pre-check-icon {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.pre-check-status {
+  margin-left: auto;
+  color: #374151;
+  font-size: 0.98rem;
+}
+
+.pre-check-item--success {
+  border-color: #22c55e;
+}
+
+.pre-check-item--success .pre-check-icon {
+  color: #22c55e;
+}
+
+.pre-check-item--failed {
+  border-color: #ef4444;
+}
+
+.pre-check-item--failed .pre-check-icon {
+  color: #ef4444;
+}
+
+.pre-check-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.pre-check-btn {
+  flex: 1;
+  height: 56px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pre-check-btn--outline {
+  background: white;
+  border: 1.5px solid #3b82f6;
+  color: #3b82f6;
+}
+
+.pre-check-btn--primary {
+  background: #d1d5db;
+  border: none;
+  color: #6b7280;
+}
+
+.pre-check-btn--primary:not(:disabled) {
+  background: #2563eb;
+  color: white;
+}
+
+.pre-check-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.9;
+}
