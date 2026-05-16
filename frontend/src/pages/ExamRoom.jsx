@@ -7,6 +7,7 @@ import useProctoring from "../hooks/useProctoring.js";
 import examService from "../services/exam.js";
 import "../styles/exam.css";
 import "../styles/modal.css";
+import PreExamCheck from "./PreExamCheck";
 
 export default function ExamRoom({ onNavigate }) {
   const [showWarning, setShowWarning] = useState(false);
@@ -17,6 +18,7 @@ export default function ExamRoom({ onNavigate }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [loading, setLoading] = useState(false);
+  const [preCheckCompleted, setPreCheckCompleted] = useState(false);
 
   // Session ID — exam-service gelince API'den alınacak, şimdilik geçici
   const [sessionId] = useState(() => `session_${Date.now()}`);
@@ -73,9 +75,11 @@ export default function ExamRoom({ onNavigate }) {
       }
       setQuestions(fetchedQuestions);
       
-      await proctoring.startProctoring();
-      proctoring.requestFullscreen();
-      setProctoringStarted(true);
+     await proctoring.startProctoring();
+     proctoring.requestFullscreen();
+     setPreCheckCompleted(true);
+     setProctoringStarted(true);
+      
     } catch (err) {
       console.error("Sınav başlatılırken kritik hata:", err);
     } finally {
@@ -113,6 +117,13 @@ export default function ExamRoom({ onNavigate }) {
     }
   }, [totalViolations, maxViolations, proctoring, onNavigate]);
 
+  if (!preCheckCompleted) {
+  return (
+    <PreExamCheck
+      onComplete={handleStartProctoring}
+    />
+  );
+}
   return (
     <>
      
