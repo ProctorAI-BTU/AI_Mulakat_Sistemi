@@ -4,9 +4,13 @@ import { vi } from 'vitest'
 
 import InstructorDashboard from './InstructorDashboard'
 
+vi.mock('../components/Dashboard/RiskCharts', () => ({
+  default: () => <div data-testid="risk-charts">RiskCharts Mock</div>,
+}))
+
 describe('InstructorDashboard Page', () => {
 
-  test('navbar ve dashboard başlığı render edilmeli', () => {
+  test('navbar ve dashboard menüleri render edilmeli', () => {
     render(
       <InstructorDashboard
         onNavigate={() => {}}
@@ -31,6 +35,17 @@ describe('InstructorDashboard Page', () => {
     expect(screen.getByText('Bugünkü Aktif Sınavlar')).toBeInTheDocument()
     expect(screen.getByText('Aktif Oturumlar')).toBeInTheDocument()
     expect(screen.getByText('Kritik Alarm')).toBeInTheDocument()
+  })
+
+  test('RiskCharts componenti render edilmeli', () => {
+    render(
+      <InstructorDashboard
+        onNavigate={() => {}}
+        onLogout={() => {}}
+      />
+    )
+
+    expect(screen.getByTestId('risk-charts')).toBeInTheDocument()
   })
 
   test('StudentGrid öğrenci bilgileri render edilmeli', () => {

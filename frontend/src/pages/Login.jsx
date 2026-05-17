@@ -138,8 +138,9 @@ export default function Login({ onNavigate }) {
 
           {!isLoginView && (
             <div className="form-group">
-              <label>Rol</label>
+              <label htmlFor="role">Rol</label>
               <select
+                id="role"
                 name="role"
                 className="form-input"
                 value={formData.role}

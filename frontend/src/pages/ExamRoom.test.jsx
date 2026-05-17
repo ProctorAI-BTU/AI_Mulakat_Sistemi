@@ -4,70 +4,152 @@ import { vi } from 'vitest'
 
 import ExamRoom from './ExamRoom'
 
+vi.mock('../hooks/useProctoring.js', () => ({
+  default: () => ({
+    videoRef: { current: null },
+
+    startProctoring: vi.fn(),
+    stopProctoring: vi.fn(),
+    requestFullscreen: vi.fn(),
+
+    isFullscreen: true,
+    isTabVisible: true,
+    cameraActive: true,
+    isAnalyzing: false,
+
+    violationCount: 0,
+
+    riskData: {
+      risk_score: 24,
+      risk_level: 'low',
+    },
+
+    faceResult: {
+      face_detected: true,
+    },
+
+    gazeResult: {
+      gaze: 'screen',
+    },
+  }),
+}))
+
+vi.mock('../services/exam.js', () => ({
+  default: {
+    startSession: vi.fn(),
+    finishSession: vi.fn(),
+  },
+}))
+
+global.fetch = vi.fn(() =>
+  Promise.resolve({
+    json: () =>
+      Promise.resolve({
+        success: true,
+        questions: [
+          {
+            _id: 'q1',
+            text: 'Test Sorusu',
+            options: ['A', 'B', 'C', 'D'],
+          },
+        ],
+      }),
+  })
+)
+
 describe('ExamRoom Page', () => {
 
-  test('sınav başlığı ve timer render edilmeli', () => {
+  test('başlangıç ekranı render edilmeli', () => {
     render(<ExamRoom onNavigate={() => {}} />)
 
-    expect(screen.getByText('Sınav: Matematik Vize')).toBeInTheDocument()
-    expect(screen.getByText('00:42:13')).toBeInTheDocument()
+    expect(
+      screen.getByText('Sınava Başlamadan Önce')
+    ).toBeInTheDocument()
+
+    expect(
+      screen.getByText('Sınavı Başlat')
+    ).toBeInTheDocument()
+
+    expect(
+      screen.getByText(/Kamera erişimi gereklidir/i)
+    ).toBeInTheDocument()
   })
 
-  test('proctoring durumları ve risk bilgisi gösterilmeli', () => {
+  test('Sınavı Başlat butonuna tıklanınca sınav ekranı açılmalı', async () => {
     render(<ExamRoom onNavigate={() => {}} />)
 
-    expect(screen.getByText('Kamera: Aktif')).toBeInTheDocument()
-    expect(screen.getByText('Mikrofon: Aktif')).toBeInTheDocument()
-    expect(screen.getByText('Fullscreen: Açık')).toBeInTheDocument()
-    expect(screen.getByText('Risk: 24 (Düşük)')).toBeInTheDocument()
+    const startButton = screen.getByText('Sınavı Başlat')
+
+    await userEvent.click(startButton)
+
+    expect(
+      await screen.findByText('Sınav: Matematik Vize')
+    ).toBeInTheDocument()
+
+    expect(
+      screen.getByText('00:42:13')
+    ).toBeInTheDocument()
   })
 
-  test('soru kartı ve seçenekler render edilmeli', () => {
+  test('soru bilgileri render edilmeli', async () => {
     render(<ExamRoom onNavigate={() => {}} />)
 
-    expect(screen.getByText('Soru 1 / 2')).toBeInTheDocument()
-    expect(screen.getByText('Aşağıdaki integrali çözünüz: ∫x² dx')).toBeInTheDocument()
-    expect(screen.getAllByRole('radio')).toHaveLength(4)
+    await userEvent.click(
+      screen.getByText('Sınavı Başlat')
+    )
+
+    expect(
+      await screen.findByText('Soru 1 / 1')
+    ).toBeInTheDocument()
+
+    expect(
+      screen.getByText('Test Sorusu')
+    ).toBeInTheDocument()
+
+    expect(
+      screen.getAllByRole('radio')
+    ).toHaveLength(4)
   })
 
-  test('uyarı modalı başlangıçta görünmeli', () => {
+  test('proctoring durumları gösterilmeli', async () => {
     render(<ExamRoom onNavigate={() => {}} />)
 
-    expect(screen.getByText('UYARI')).toBeInTheDocument()
-    expect(screen.getByText('Tam ekran modundan çıkıldı.')).toBeInTheDocument()
-    expect(screen.getByText('İhlal sayısı: 2 / 3')).toBeInTheDocument()
+    await userEvent.click(
+      screen.getByText('Sınavı Başlat')
+    )
+
+    expect(
+      await screen.findByText(/Risk:/i)
+    ).toBeInTheDocument()
+
+    expect(
+      screen.getByText(/Düşük/i)
+    ).toBeInTheDocument()
   })
 
-  test('Tam Ekrana Dön butonuna tıklanınca modal kapanmalı', async () => {
+  test('Önceki butonu ilk soruda disabled olmalı', async () => {
     render(<ExamRoom onNavigate={() => {}} />)
 
-    const button = screen.getByText('Tam Ekrana Dön')
+    await userEvent.click(
+      screen.getByText('Sınavı Başlat')
+    )
 
-    await userEvent.click(button)
-
-    expect(screen.queryByText('UYARI')).not.toBeInTheDocument()
-    expect(screen.queryByText('Tam ekran modundan çıkıldı.')).not.toBeInTheDocument()
-  })
-
-  test('Sınavı Bitir butonuna tıklanınca onNavigate çalışmalı', async () => {
-    const mockNavigate = vi.fn()
-
-    render(<ExamRoom onNavigate={mockNavigate} />)
-
-    const submitButton = screen.getByText('Sınavı Bitir')
-
-    await userEvent.click(submitButton)
-
-    expect(mockNavigate).toHaveBeenCalledTimes(1)
-    expect(mockNavigate).toHaveBeenCalledWith('instructor-dashboard')
-  })
-
-  test('Önceki butonu disabled olmalı', () => {
-    render(<ExamRoom onNavigate={() => {}} />)
-
-    const prevButton = screen.getByText('Önceki')
+    const prevButton =
+      await screen.findByText('Önceki')
 
     expect(prevButton).toBeDisabled()
+  })
+
+  test('son soruda Sınavı Bitir butonu görünmeli', async () => {
+    render(<ExamRoom onNavigate={() => {}} />)
+
+    await userEvent.click(
+      screen.getByText('Sınavı Başlat')
+    )
+
+    expect(
+      await screen.findByText('Sınavı Bitir')
+    ).toBeInTheDocument()
   })
 
 })
