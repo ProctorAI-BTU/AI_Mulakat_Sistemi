@@ -1,13 +1,21 @@
 import React from "react";
 
-export default function QuestionCard() {
+export default function QuestionCard({ question, selectedOption, onOptionSelect }) {
+  if (!question) return null;
+
   return (
     <div className="question-card">
-      <p className="question-text">Aşağıdaki integrali çözünüz: ∫x² dx</p>
+      <p className="question-text">{question.text}</p>
       <div className="options-list">
-        {["A) x³/3 + C", "B) x³ + C", "C) 2x + C", "D) x²/2 + C"].map((opt, i) => (
+        {question.options.map((opt, i) => (
           <label key={i} className="option-item">
-            <input type="radio" name="q1" className="option-radio" />
+            <input 
+              type="radio" 
+              name={`q_${question._id}`} 
+              className="option-radio" 
+              checked={selectedOption === i}
+              onChange={() => onOptionSelect(i)}
+            />
             <span className="option-text">{opt}</span>
           </label>
         ))}

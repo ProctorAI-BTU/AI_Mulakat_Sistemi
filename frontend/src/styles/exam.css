@@ -196,6 +196,61 @@ body {
 }
 
 
+/* ═══════════════════════════════════════
+   Proctoring Başlangıç Ekranı
+   ═══════════════════════════════════════ */
+
+.exam-start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  padding: 2rem;
+  text-align: center;
+}
+
+.exam-start-screen ul {
+  list-style: none;
+  padding: 0;
+}
+
+.exam-start-screen li {
+  padding: 0.3rem 0;
+}
+
+/* ═══════════════════════════════════════
+   Risk Indicator Renkleri
+   ═══════════════════════════════════════ */
+
+.risk-indicator--low {
+  color: #22c55e;
+}
+
+.risk-indicator--medium {
+  color: #f59e0b;
+}
+
+.risk-indicator--high {
+  color: #ef4444;
+}
+
+/* Analiz yapılırken titreyen nokta */
+.analyzing-dot {
+  animation: pulse-dot 1s ease-in-out infinite;
+  color: #3b82f6;
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════ */
+
 @media (max-width: 768px) {
   .exam-header {
     height: auto;
